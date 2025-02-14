@@ -16,6 +16,7 @@ public class Main {
                 System.out.println("\n---------- Menu ----------");
                 System.out.println("1 - Cadastrar produto");
                 System.out.println("2 - Cadastrar cliente");
+                System.out.println("3 - Buscar produto");
                 System.out.println("0 - Sair");
                 
                 int opcao = Input.getInt("Digite sua opção: ");
@@ -38,6 +39,19 @@ public class Main {
                         System.out.println("Cliente cadastrado com sucesso!");
                     } catch (Exception e) {
                         System.out.println("Erro ao cadastrar cliente: " + e.getMessage());
+                    }
+                } else if (opcao == 3) {
+                    try {
+                        int id = Input.getInt("Digite o ID do produto: ");
+                        Product produto = productService.findProductById(id);
+                        if (produto != null) {
+                            System.out.println("Produto encontrado:");
+                            produto.print();
+                        } else {
+                            System.out.println("Produto não encontrado!");
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Erro ao buscar produto: " + e.getMessage());
                     }
                 } else {
                     System.out.println("Opção inválida!");

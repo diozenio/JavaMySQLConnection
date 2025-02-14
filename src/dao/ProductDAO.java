@@ -62,4 +62,30 @@ public class ProductDAO {
 
         return lista;
     }
+
+    public Product findById(int id) {
+        String sql = "SELECT * FROM PRODUTO WHERE ID = ?;";
+
+        try {
+            Connection connection = ConnectionHelper.getConnection();
+            PreparedStatement pst = connection.prepareStatement(sql);
+            pst.setInt(1, id);
+
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                String name = rs.getString("NOME");
+                double price = rs.getDouble("VALOR_UNIT");
+                int quantity = rs.getInt("QUANTIDADE");
+
+                return new Product(id, name, price, quantity);
+            }
+
+            pst.close();
+            connection.close();
+
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 }
