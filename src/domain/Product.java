@@ -62,11 +62,6 @@ public class Product {
     }
 
     public void print() {
-        System.out.println("---------- Dados do Produto ----------");
-        System.out.println("ID: " + ID);
-        System.out.println("Nome: " + name);
-        System.out.printf("Preço: R$ %.2f%n", price);
-        System.out.println("Quantidade: " + quantity);
-        System.out.println("------------------------------------");
+        System.out.printf("ID: %d | Nome: %s | Preço: R$ %.2f | Quantidade: %d%n", ID, name, price, quantity);
     }
 }
