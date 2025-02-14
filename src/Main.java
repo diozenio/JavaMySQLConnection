@@ -2,6 +2,9 @@ import controllers.ProductController;
 import controllers.ClientController;
 import controllers.SaleController;
 import utils.Input;
+import exceptions.ValidationException;
+import exceptions.DatabaseException;
+import exceptions.NotFoundException;
 
 public class Main {
     public static void main(String[] args) {
@@ -39,8 +42,14 @@ public class Main {
                     default:
                         System.out.println("Opção inválida!");
                 }
+            } catch (ValidationException e) {
+                System.out.println("Erro de validação: " + e.getMessage());
+            } catch (NotFoundException e) {
+                System.out.println("Erro: " + e.getMessage());
+            } catch (DatabaseException e) {
+                System.out.println("Erro no banco de dados: " + e.getMessage());
             } catch (Exception e) {
-                System.out.println("Ocorreu um erro inesperado: " + e.getMessage());
+                System.out.println("Erro inesperado: " + e.getMessage());
             }
         }
     }

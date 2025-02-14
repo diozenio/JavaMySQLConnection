@@ -10,6 +10,8 @@ import services.OrderService;
 import services.ProductService;
 import utils.Input;
 import java.util.List;
+import exceptions.ConnectionException;
+import exceptions.DatabaseException;
 
 public class SaleController {
     private final OrderService orderService;
@@ -82,6 +84,11 @@ public class SaleController {
                 }
                 System.out.println("------------------------------------");
             }
+        } catch (ConnectionException e) {
+            System.out.println("Erro de conexão: " + e.getMessage());
+            System.out.println("Verifique se o banco de dados está em execução.");
+        } catch (DatabaseException e) {
+            System.out.println("Erro no banco de dados: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Erro ao listar vendas: " + e.getMessage());
         }

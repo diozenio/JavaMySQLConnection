@@ -4,6 +4,9 @@ import domain.Product;
 import factories.ProductFactory;
 import services.ProductService;
 import utils.Input;
+import exceptions.NotFoundException;
+import exceptions.ValidationException;
+import exceptions.DatabaseException;
 import java.util.List;
 
 public class ProductController {
@@ -18,8 +21,12 @@ public class ProductController {
             Product novoProduto = ProductFactory.createProduct();
             productService.saveProduct(novoProduto);
             System.out.println("Produto cadastrado com sucesso!");
+        } catch (ValidationException e) {
+            System.out.println("Erro de validação: " + e.getMessage());
+        } catch (DatabaseException e) {
+            System.out.println("Erro no banco de dados: " + e.getMessage());
         } catch (Exception e) {
-            System.out.println("Erro ao cadastrar produto: " + e.getMessage());
+            System.out.println("Erro inesperado: " + e.getMessage());
         }
     }
 
@@ -27,14 +34,13 @@ public class ProductController {
         try {
             int id = Input.getInt("Digite o ID do produto: ");
             Product produto = productService.findProductById(id);
-            if (produto != null) {
-                System.out.println("Produto encontrado:");
-                produto.print();
-            } else {
-                System.out.println("Produto não encontrado!");
-            }
+            produto.print();
+        } catch (NotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (DatabaseException e) {
+            System.out.println("Erro no banco de dados: " + e.getMessage());
         } catch (Exception e) {
-            System.out.println("Erro ao buscar produto: " + e.getMessage());
+            System.out.println("Erro inesperado: " + e.getMessage());
         }
     }
 

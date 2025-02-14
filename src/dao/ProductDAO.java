@@ -2,6 +2,9 @@ package dao;
 
 import domain.Product;
 import db.ConnectionHelper;
+import exceptions.DatabaseException;
+import exceptions.NotFoundException;
+import exceptions.ConnectionException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -29,8 +32,10 @@ public class ProductDAO {
             pst.close();
             connection.close();
 
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
+        } catch (ConnectionException e) {
+            throw e;
+        } catch (SQLException e) {
+            throw new DatabaseException("Erro ao salvar produto no banco de dados", e);
         }
     }
 
@@ -56,8 +61,10 @@ public class ProductDAO {
             pst.close();
             connection.close();
 
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
+        } catch (ConnectionException e) {
+            throw e;
+        } catch (SQLException e) {
+            throw new DatabaseException("Erro ao buscar produtos no banco de dados", e);
         }
 
         return lista;
@@ -83,9 +90,12 @@ public class ProductDAO {
             pst.close();
             connection.close();
 
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
+            throw new NotFoundException("Produto não encontrado com ID: " + id);
+
+        } catch (ConnectionException e) {
+            throw e;
+        } catch (SQLException e) {
+            throw new DatabaseException("Erro ao buscar produto no banco de dados", e);
         }
-        return null;
     }
 }

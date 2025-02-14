@@ -2,6 +2,8 @@ package dao;
 
 import domain.*;
 import db.ConnectionHelper;
+import exceptions.ConnectionException;
+import exceptions.DatabaseException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -41,8 +43,10 @@ public class OrderDAO {
             pst.close();
             connection.close();
 
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
+        } catch (ConnectionException e) {
+            throw e;
+        } catch (SQLException e) {
+            throw new DatabaseException("Erro ao salvar venda no banco de dados", e);
         }
     }
 
@@ -86,8 +90,10 @@ public class OrderDAO {
             pst.close();
             connection.close();
 
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
+        } catch (ConnectionException e) {
+            throw e;
+        } catch (SQLException e) {
+            throw new DatabaseException("Erro ao buscar vendas no banco de dados", e);
         }
 
         return orders;

@@ -2,6 +2,9 @@ package dao;
 
 import domain.Client;
 import db.ConnectionHelper;
+import exceptions.DatabaseException;
+import exceptions.NotFoundException;
+import exceptions.ConnectionException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,8 +27,10 @@ public class ClientDAO {
             pst.close();
             connection.close();
 
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
+        } catch (ConnectionException e) {
+            throw e;
+        } catch (SQLException e) {
+            throw new DatabaseException("Erro ao salvar cliente no banco de dados", e);
         }
     }
 
@@ -51,8 +56,10 @@ public class ClientDAO {
             pst.close();
             connection.close();
 
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
+        } catch (ConnectionException e) {
+            throw e;
+        } catch (SQLException e) {
+            throw new DatabaseException("Erro ao buscar clientes no banco de dados", e);
         }
 
         return lista;
@@ -78,9 +85,12 @@ public class ClientDAO {
             pst.close();
             connection.close();
 
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
+            throw new NotFoundException("Cliente não encontrado com CPF: " + cpf);
+
+        } catch (ConnectionException e) {
+            throw e;
+        } catch (SQLException e) {
+            throw new DatabaseException("Erro ao buscar cliente no banco de dados", e);
         }
-        return null;
     }
 } 

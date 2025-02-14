@@ -1,5 +1,6 @@
 package utils;
 
+import exceptions.ValidationException;
 import java.util.Scanner;
 
 public class Input {
@@ -7,7 +8,11 @@ public class Input {
 
     public static String getString(String message) {
         System.out.print(message);
-        return scanner.nextLine();
+        String input = scanner.nextLine().trim();
+        if (input.isEmpty()) {
+            throw new ValidationException("O campo não pode estar vazio");
+        }
+        return input;
     }
 
     public static int getInt(String message) {
@@ -15,9 +20,13 @@ public class Input {
             try {
                 System.out.print(message);
                 String input = scanner.nextLine();
-                return Integer.parseInt(input);
+                int value = Integer.parseInt(input);
+                if (value < 0) {
+                    throw new ValidationException("O valor não pode ser negativo");
+                }
+                return value;
             } catch (NumberFormatException e) {
-                System.out.println("Erro: Digite um número inteiro válido!");
+                throw new ValidationException("Digite um número inteiro válido!");
             }
         }
     }
@@ -27,9 +36,13 @@ public class Input {
             try {
                 System.out.print(message);
                 String input = scanner.nextLine();
-                return Double.parseDouble(input);
+                double value = Double.parseDouble(input);
+                if (value < 0) {
+                    throw new ValidationException("O valor não pode ser negativo");
+                }
+                return value;
             } catch (NumberFormatException e) {
-                System.out.println("Erro: Digite um número decimal válido!");
+                throw new ValidationException("Digite um número decimal válido!");
             }
         }
     }
