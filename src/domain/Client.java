@@ -54,4 +54,13 @@ public class Client {
                 ", telefone='" + phone + '\'' +
                 '}';
     }
+
+    public void print() {
+        System.out.println("---------- Dados do Cliente ----------");
+        System.out.println("CPF: " + cpf);
+        System.out.println("Nome: " + name);
+        System.out.println("Endereço: " + address);
+        System.out.println("Telefone: " + phone);
+        System.out.println("------------------------------------");
+    }
 } 
