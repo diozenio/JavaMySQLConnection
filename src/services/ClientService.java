@@ -18,4 +18,8 @@ public class ClientService {
     public List<Client> getAllClients() {
         return clientDAO.findAll();
     }
+
+    public Client findClientByCpf(String cpf) {
+        return clientDAO.findByCpf(cpf);
+    }
 } 

@@ -57,4 +57,30 @@ public class ClientDAO {
 
         return lista;
     }
+
+    public Client findByCpf(String cpf) {
+        String sql = "SELECT * FROM CLIENTE WHERE CPF = ?;";
+
+        try {
+            Connection connection = ConnectionHelper.getConnection();
+            PreparedStatement pst = connection.prepareStatement(sql);
+            pst.setString(1, cpf);
+
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                String name = rs.getString("NOME");
+                String address = rs.getString("ENDERECO");
+                String phone = rs.getString("TELEFONE");
+
+                return new Client(cpf, name, address, phone);
+            }
+
+            pst.close();
+            connection.close();
+
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 } 
