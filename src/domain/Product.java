@@ -60,4 +60,13 @@ public class Product {
                 ", quantidade=" + quantity +
                 '}';
     }
+
+    public void print() {
+        System.out.println("---------- Dados do Produto ----------");
+        System.out.println("ID: " + ID);
+        System.out.println("Nome: " + name);
+        System.out.printf("Preço: R$ %.2f%n", price);
+        System.out.println("Quantidade: " + quantity);
+        System.out.println("------------------------------------");
+    }
 }
