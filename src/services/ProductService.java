@@ -2,6 +2,7 @@ package services;
 
 import domain.Product;
 import dao.ProductDAO;
+import java.util.List;
 
 public class ProductService {
     private final ProductDAO productDAO;
@@ -16,5 +17,9 @@ public class ProductService {
 
     public Product findProductById(int id) {
         return productDAO.findById(id);
+    }
+
+    public List<Product> getAllProducts() {
+        return productDAO.findAll();
     }
 }

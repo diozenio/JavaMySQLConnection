@@ -5,6 +5,7 @@ import factories.ClientFactory;
 import utils.Input;
 import services.ProductService;
 import services.ClientService;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,6 +18,7 @@ public class Main {
                 System.out.println("1 - Cadastrar produto");
                 System.out.println("2 - Cadastrar cliente");
                 System.out.println("3 - Buscar produto");
+                System.out.println("4 - Listar produtos");
                 System.out.println("0 - Sair");
                 
                 int opcao = Input.getInt("Digite sua opção: ");
@@ -52,6 +54,21 @@ public class Main {
                         }
                     } catch (Exception e) {
                         System.out.println("Erro ao buscar produto: " + e.getMessage());
+                    }
+                } else if (opcao == 4) {
+                    try {
+                        List<Product> produtos = productService.getAllProducts();
+                        if (produtos.isEmpty()) {
+                            System.out.println("Não há produtos cadastrados!");
+                        } else {
+                            System.out.println("\n---------- Lista de Produtos ----------");
+                            for (Product produto : produtos) {
+                                produto.print();
+                            }
+                            System.out.println("------------------------------------");
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Erro ao listar produtos: " + e.getMessage());
                     }
                 } else {
                     System.out.println("Opção inválida!");
