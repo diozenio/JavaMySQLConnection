@@ -1,16 +1,21 @@
 import domain.Product;
+import domain.Client;
 import factories.ProductFactory;
+import factories.ClientFactory;
 import utils.Input;
 import services.ProductService;
+import services.ClientService;
 
 public class Main {
     public static void main(String[] args) {
         ProductService productService = new ProductService();
+        ClientService clientService = new ClientService();
         
         while (true) {
             try {
                 System.out.println("\n---------- Menu ----------");
                 System.out.println("1 - Cadastrar produto");
+                System.out.println("2 - Cadastrar cliente");
                 System.out.println("0 - Sair");
                 
                 int opcao = Input.getInt("Digite sua opção: ");
@@ -25,6 +30,14 @@ public class Main {
                         System.out.println("Produto cadastrado com sucesso!");
                     } catch (Exception e) {
                         System.out.println("Erro ao cadastrar produto: " + e.getMessage());
+                    }
+                } else if (opcao == 2) {
+                    try {
+                        Client novoCliente = ClientFactory.createClient();
+                        clientService.saveClient(novoCliente);
+                        System.out.println("Cliente cadastrado com sucesso!");
+                    } catch (Exception e) {
+                        System.out.println("Erro ao cadastrar cliente: " + e.getMessage());
                     }
                 } else {
                     System.out.println("Opção inválida!");
